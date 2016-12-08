@@ -1,0 +1,72 @@
+
+
+dbo.InformatiiCuloareModelProducator 
+----Se afiseaza vizitele lui masina cu numarul X , 
+--Culoare Y , Model Z , Producator W, a fost in Perioada T.
+DECLARE
+@numar varchar(8) ='B999TST',
+@culoare nvarchar(50) = 'Rosu',
+@model nvarchar(50) = 'Corsa',
+@producator nvarchar(50) = 'Opel',
+@perioadaInceput datetime = '2016-01-01 10:00:00',
+@perioadaSfarsit datetime = '2016-12-10 00:00:01'
+
+
+
+dbo.LaSutaMasiniDeCuloare
+--Cat la suta dintre masinile care au parcat in perioada Y au culoarea X 
+DECLARE
+@culoare nvarchar(50) = 'galben',
+@perioadaInceput datetime = '2016-01-01 10:00:00',
+@perioadaSfarsit datetime = '2016-12-01 10:00:00'
+
+dbo.LaSutaMasiniPrezente
+--Cat la suta din masinile prezente in parcare  sunt din  judetului X
+DECLARE
+@judet nvarchar(50) = 'Bucuresti'
+
+dbo.LaSutaModelActiv
+--Cat la suta dintre masinile salvate in baza au modelul activ
+
+
+dbo.LaSutaModelAnX
+--Cat la suta dintre masinile care au parcat in perioada Y au culoarea X 
+DECLARE
+@an int = 2005
+
+
+dbo.LaSutaProducatorActiv
+--Cat la suta dintre masinile salvate in baza au producator activ
+
+
+dbo.MasiniProducatorXdinJudetY
+--Tabela cu informatii despre masinile cu Producator X din judetul Y .
+DECLARE
+  @producator varchar(50) = 'Opel' ,
+  @judet varchar(50) = 'Bucuresti',
+  @codJ varchar(2) = null	
+
+dbo.ProfitParcare
+--Cat profit a scos Parcarea in perioada Y cu tarfiul Z pe ora. 
+DECLARE
+
+  @perioadaInceput datetime = '2015-01-01 10:10:10',
+  @perioadaSfarsit datetime = '2017-01-01 10:10:10'	,
+  @tarif decimal = 2.00
+-- AS
+
+
+dbo.ProfitpeNivelRegiune
+--Cat profit a scos Regiunea X Din Nivelul T  in perioada Y cu tarfiul Z pe ora. 
+DECLARE
+  @regiune char(1) = 'L' ,
+  @nivel varchar(50) = '1',
+  @perioadaInceput datetime = '2015-01-01 10:10:10',
+  @perioadaSfarsit datetime = '2017-01-01 10:10:10'	,
+  @tarif decimal = 2.00
+-- AS
+
+ dbo.XOreLaRand
+DECLARE
+@ore int = 4
+

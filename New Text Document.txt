@@ -1,0 +1,23 @@
+Sablon---
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Producator1.aspx.cs" Inherits="SmartParking.Producator" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:GridView ID="GridViewProducator" runat="server" AutoGenerateColumns="true"></asp:GridView>
+    </div>
+    </form>
+</body>
+</html>
+
+
+
+using (var context = new ParcareEntities()) {
+                GridViewProducator.DataSource = context.Producator.ToList();
+                GridViewProducator.DataBind();
