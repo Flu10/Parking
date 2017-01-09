@@ -1,0 +1,103 @@
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (ParcareEntities entities = new ParcareEntities())
+            {
+                entities.Database.Connection.Open();
+
+                var arrMasina = entities.IDMasina().ToList();
+                var arrNivel = entities.IDNivel().ToList();
+                    
+                    DateTime dataPlecare = DateTime.Now.Subtract(new TimeSpan(90, 0, 0, 0)).AddDays(new Random().Next(90));
+                DateTime dataSosire = dataPlecare.Subtract(new TimeSpan(new Random().Next(5), 0, 0, 0));
+
+                entities.servicePopulareVizita(Convert.ToInt32(arrMasina[1]), Convert.ToInt32(arrNivel[1]),
+                    dataPlecare, dataSosire);
+                entities.Database.Connection.Close();
+            }
+    }
+}
+
+    }
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
+using System.ServiceProcess;
+using System.Text;
+using System.Threading;
+using System.IO;
+using System.Management;
+using System.Security.Cryptography.Xml;
+
+namespace WindowsServiceTest
+{
+    public partial class Service1 : ServiceBase
+    {
+        private string filePath = @"D:\AC\WindowsServiceTest.txt";
+        private Thread th;
+        private bool isRunning = false;
+        public Service1()
+        {
+            InitializeComponent();
+        }
+
+        protected override void OnStart(string[] args)
+        {
+            th = new Thread(DoThis);
+            th.Start();
+            isRunning = true;
+
+        }
+
+        private void DoThis()
+        {
+            while (isRunning)
+            {
+                try
+                {
+                    using (ParcareEntities entities = new ParcareEntities())
+                    {
+                        entities.Database.Connection.Open();
+                        var arrMasina = entities.Masina.SqlQuery("SELECT  ID FROM  MASINA ORDER BY NEWID()").ToList();
+                        var arrNivel = entities.Masina.SqlQuery("SELECT  ID FROM  NIVEL ORDER BY NEWID()").ToList();
+                        DateTime dataPlecare = DateTime.Now.Subtract(new TimeSpan(90, 0, 0, 0)).AddDays(new Random().Next(90));
+                        DateTime dataSosire = dataPlecare.Subtract(new TimeSpan(new Random().Next(89), 0, 0, 0));
+
+                        entities.servicePopulareVizita(Convert.ToInt32(arrMasina[1]), Convert.ToInt32(arrNivel[1]),
+                            dataPlecare, dataSosire);
+                        entities.Database.Connection.Close();
+                    }
+                    Thread.Sleep(2000);
+                }
+                catch (Exception ex)
+                {
+                    File.AppendAllText(filePath, ex.Message);
+                    File.AppendAllText(filePath, ex.StackTrace);
+                }
+
+
+            }
+        }
+        protected override void OnStop()
+        {
+            isRunning = false;
+            th = null;
+        }
+    }
+}
+
+
+
+
+
